@@ -1,0 +1,35 @@
+{
+  "_comment": "Jeu de données d'EXEMPLE pour fill_pdf.py. Le bloc 'of' contient l'identité publique de l'organisme (constante). Les blocs entreprise / stagiaire / formation sont FICTIFS : ne jamais versionner de données client réelles dans ce dépôt.",
+
+  "of": {
+    "raisonSociale": "KAELIA", "nda": "84420407442", "siret": "95367223500017",
+    "adresse": "198 rue des amis de l'industrie", "codePostal": "42590", "ville": "Neulise",
+    "responsableNom": "GUILLEMOIS", "responsablePrenom": "Killian", "responsableMr": "oui",
+    "responsableTel": "", "responsableEmail": "contact@kaelia.fr",
+    "contactNom": "WEIL", "contactPrenom": "Karine", "contactTel": "", "contactEmail": "contact@kaelia.fr",
+    "mandat": "oui"
+  },
+  "entreprise": {
+    "raisonSociale": "EXEMPLE CONSEIL", "nomCommercial": "",
+    "naf": "70.22Z", "siret": "00000000000000",
+    "activite": "Conseil aux entreprises (exemple)",
+    "adresse": "1 rue de l'Exemple", "codePostal": "69000", "ville": "Lyon"
+  },
+  "stagiaire": {
+    "nom": "DUPONT", "prenom": "Camille", "nomNaissance": "", "civiliteMme": "oui",
+    "dateNaissance": "01/1980", "secu": "", "telephone": "", "email": ""
+  },
+  "formation": {
+    "intitule": "Stratégie de communication digitale et réseaux sociaux",
+    "thematique": "Communication digitale", "estActionFormation": "oui",
+    "dateDebut": "02/03/2026", "dateFin": "04/03/2026",
+    "dureePresentielIndividuel": "18",
+    "formateur": "Killian Guillemois",
+    "lieuCodePostal": "69000", "lieuVille": "Lyon",
+    "lieuAdresse": "1 rue de l'Exemple, 69000 Lyon",
+    "prixHT": "",
+    "preuveFeuillesPresence": "oui", "preuveAttestation": "oui",
+    "deroulement": ""
+  },
+  "signature": { "lieu": "Neulise", "date": "02/02/2026" }
+}

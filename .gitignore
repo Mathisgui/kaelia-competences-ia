@@ -1,0 +1,22 @@
+# Dépendances
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# macOS
+.DS_Store
+
+# Sorties générées par les scripts (programmes, dossiers remplis…)
+# Ce sont des documents de travail, souvent nominatifs : ils ne se versionnent jamais.
+*.docx
+*.pdf
+
+# EXCEPTION : les gabarits vierges sont, eux, indispensables au dépôt.
+# Sans cette ligne, fill_pdf.py n'a plus de formulaire à remplir.
+!kaelia-financement/templates/*.pdf
+
+# Données réelles : jamais ici. Seuls les *.example.json sont versionnés.
+data.json
+*.local.json
+.env
