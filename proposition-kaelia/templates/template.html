@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Proposition d'accompagnement — {{ client.name }}</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+{% set is_options = (mode or 'phases') == 'options' %}
+{% set letters = ['A','B','C','D','E','F','G','H'] %}
+
+{# ========== COVER ========== #}
+<section class="cover">
+    <div class="logo-block">
+        <img src="../assets/logo-on-dark.png" alt="Kaelia">
+        <div class="brand">KAEL'IA</div>
+    </div>
+    <div class="date-badge">{{ meta.date_label }}</div>
+
+    <div class="title-block">
+        <div class="eyebrow">Proposition d'accompagnement</div>
+        <h1>
+            {{ meta.title_line_1 }}
+            {% if meta.title_line_2 %}<span class="accent">{{ meta.title_line_2 }}</span>{% endif %}
+        </h1>
+        <div class="tagline">{{ meta.tagline }}</div>
+    </div>
+
+    <div class="client-card">
+        <div class="label">Préparé pour</div>
+        <div class="name">{{ client.name }}</div>
+        {% if client.company %}<div class="company">{{ client.company }}{% if client.activity %} — {{ client.activity }}{% endif %}</div>{% endif %}
+    </div>
+</section>
+
+{# ========== CONTENT PAGES ========== #}
+<div class="content">
+
+    {# --- Contexte + Problème --- #}
+    <section class="content-section">
+        <span class="section-eyebrow">01 · Contexte</span>
+        <h2 class="section-title">{{ (meta.contexte_title or "La situation<br><span class='purple'>aujourd'hui.</span>") | safe }}</h2>
+        {% if contexte.lead %}
+        <p class="section-lead">{{ contexte.lead }}</p>
+        {% endif %}
+
+        {% if contexte.info %}
+        <div class="info-grid">
+            {% for item in contexte.info %}
+            <div class="info-card">
+                <div class="label">{{ item.label }}</div>
+                <div class="value">{{ item.value }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if contexte.body %}
+        <div class="contexte-block">
+            <h3>Ce qui ressort de l'analyse</h3>
+            {% for para in contexte.body %}
+            <p>{{ para }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if contexte.quote %}
+        <div class="callout">{{ contexte.quote }}</div>
+        {% endif %}
+
+        {% if probleme %}
+        <div class="contexte-block" style="margin-top: 8mm;">
+            <h3>Le problème à résoudre</h3>
+            {% if probleme is string %}
+                <p>{{ probleme }}</p>
+            {% else %}
+                {% for para in probleme %}<p>{{ para }}</p>{% endfor %}
+            {% endif %}
+        </div>
+        {% endif %}
+    </section>
+
+    {# --- Phases / Options chiffrées --- #}
+    <section class="content-section section-proposition">
+        <div class="proposition-intro">
+            <span class="section-eyebrow">02 · Notre proposition</span>
+            {% if is_options %}
+            <h2 class="section-title">{{ phases|length }} option{{ 's' if phases|length > 1 else '' }}<br><span class="purple">selon le budget.</span></h2>
+            <p class="section-lead">{{ meta.phases_lead or "Trois niveaux d'engagement. Même rigueur. Le client choisit en fonction de son budget et de son ambition." }}</p>
+            {% else %}
+            <h2 class="section-title">{% if meta.phases_title %}{{ meta.phases_title | safe }}{% else %}Un parcours<br><span class="purple">en {{ phases|length }} phase{{ 's' if phases|length > 1 else '' }}.</span>{% endif %}</h2>
+            <p class="section-lead">{{ meta.phases_lead or "Livraison progressive. Validation à chaque étape. Premiers résultats dès la fin de la Phase 1." }}</p>
+            {% endif %}
+        </div>
+
+        {% for phase in phases %}
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">
+                    {% if phase.label %}{{ phase.label }}{% elif is_options %}Option {{ letters[loop.index0] }}{% else %}Phase {{ loop.index }}{% endif %}
+                </div>
+                <div class="phase-title-wrap">
+                    <div class="title">{{ phase.title }}</div>
+                    {% if phase.sub %}<div class="sub">{{ phase.sub }}</div>{% endif %}
+                </div>
+                {% if not meta.hide_phase_prices %}<div class="phase-price">{{ phase.total_label }}</div>{% endif %}
+            </div>
+            <div class="phase-body">
+                {% if phase.intro %}
+                <div class="phase-intro">{{ phase.intro }}</div>
+                {% endif %}
+
+                <table class="systems">
+                    <thead>
+                        <tr>
+                            <th>Système</th>
+                            <th>Ce qui est livré</th>
+                            {% if not meta.hide_phase_prices %}<th class="price">Prix</th>{% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sys in phase.systems %}
+                        <tr>
+                            <td class="sys-name">{{ sys.name }}</td>
+                            <td class="sys-desc">{{ sys.desc }}</td>
+                            {% if not meta.hide_phase_prices %}<td class="sys-price{% if sys.offert %} offert{% endif %}">{% if sys.offert %}<span class="offert-badge">Offert</span>{% else %}{{ sys.price_label }}{% endif %}</td>{% endif %}
+                        </tr>
+                        {% endfor %}
+                        {% if not meta.hide_phase_prices %}
+                        <tr class="phase-total">
+                            <td colspan="2" class="total-label">
+                                {% if phase.label %}Total {{ phase.label }}{% elif is_options %}Total Option {{ letters[loop.index0] }}{% else %}Total Phase {{ loop.index }}{% endif %}
+                            </td>
+                            <td class="total-value">{{ phase.total_label }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if recap %}
+        <div class="recap">
+            <h3>{{ "Comparatif des options" if is_options else "Récapitulatif" }}</h3>
+            <table>
+                {% for row in recap.rows %}
+                <tr {% if row.highlight %}class="total"{% elif row.accent %}class="accent"{% endif %}>
+                    <td>{{ row.label }}</td>
+                    <td class="amount">{{ row.value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if maintenance %}
+        <div class="extras">
+            <h3 class="extras-title">{{ maintenance.title or "Maintenance & accompagnement" }}</h3>
+            {% if maintenance.lead %}<p class="extras-lead">{{ maintenance.lead }}</p>{% endif %}
+            {% if maintenance.offered %}<div class="offered-badge">{{ maintenance.offered | safe }}</div>{% endif %}
+            <div class="tiers">
+                {% for tier in maintenance.tiers %}
+                <div class="tier-card">
+                    <div class="tier-head">
+                        <span class="tier-name">{{ tier.name }}</span>
+                        <span class="tier-price">{{ tier.price }}</span>
+                    </div>
+                    {% if tier.sub %}<div class="tier-sub">{{ tier.sub }}</div>{% endif %}
+                    <ul class="tier-features">
+                        {% for f in tier.features %}<li>{{ f }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if couts_outils %}
+        <div class="extras">
+            <h3 class="extras-title">{{ couts_outils.title or "Les outils du système" }}</h3>
+            {% if couts_outils.lead %}<p class="extras-lead">{{ couts_outils.lead }}</p>{% endif %}
+            {% if couts_outils.from_price %}<div class="couts-from">{{ couts_outils.from_price }}</div>{% endif %}
+            <table class="couts-table">
+                {% for ligne in couts_outils.lignes %}
+                <tr><td class="couts-name">{{ ligne.name }}</td><td class="couts-price">{{ ligne.price }}</td></tr>
+                {% endfor %}
+            </table>
+            {% if couts_outils.note %}<p class="couts-note">{{ couts_outils.note }}</p>{% endif %}
+        </div>
+        {% endif %}
+    </section>
+</div>
+
+{# ========== CLOSE ========== #}
+<section class="close">
+    <div class="logo-block">
+        <img src="../assets/logo-on-dark.png" alt="Kaelia">
+        <div class="brand">KAEL'IA</div>
+    </div>
+    <div class="message">
+        <h2>{{ (close.headline or "On construit,<br>le client garde la main.") | safe }}</h2>
+        <div class="sub">{{ close.sub or "Chaque système est validé à chaque étape. Aucun envoi automatique sans feu vert." }}</div>
+    </div>
+    <div class="contact-card">
+        <div class="label">Contact</div>
+        <div class="contact-row">
+            {% for c in close.contacts %}
+            <div class="contact-item">
+                <div class="k">{{ c.label }}</div>
+                <div class="v">{{ c.value }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

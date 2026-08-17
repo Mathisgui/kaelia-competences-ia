@@ -60,6 +60,16 @@ données de **référence**, à lire avant d'écrire un programme : il fixe le n
 `make_pill.py` (pavé arrondi) demande Pillow. La police Montserrat étant **variable**,
 la graisse se sélectionne par `set_variation_by_name("Bold")`, sans quoi le rendu sort en Thin.
 
+### Proposition commerciale (HTML → PDF)
+
+`proposition-kaelia/` — `build_proposition.py`, gabarit `template.html` + `style.css`,
+logos. Le jeu de données de référence n'est pas publié : il porte un client réel.
+
+### Logos
+
+`logos/` — les 4 logos Kaelia et leurs usages. Les générateurs embarquent leur propre
+copie dans `assets/` (résolution par `__dirname`).
+
 ### Formulaires de financement (PDF AcroForm)
 
 | Dossier | Contenu |

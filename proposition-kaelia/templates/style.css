@@ -1,0 +1,744 @@
+/* ===========================================================
+   Kaelia / Kael'IA — Proposition d'accompagnement (PDF)
+   Palette violet foncé, gradients, cartes blanches, accents
+   =========================================================== */
+
+/* --- Tokens --- */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@page cover {
+    margin: 0;
+}
+@page content {
+    margin: 18mm 18mm 22mm 18mm;
+    @bottom-left {
+        content: "Kael'IA — Proposition d'accompagnement";
+        font-family: "Helvetica", sans-serif;
+        font-size: 8pt;
+        color: #6B6B8A;
+        padding-left: 4mm;
+    }
+    @bottom-right {
+        content: counter(page);
+        font-family: "Helvetica", sans-serif;
+        font-size: 8pt;
+        color: #6B6B8A;
+        padding-right: 4mm;
+    }
+}
+@page close {
+    margin: 0;
+}
+
+/* --- Reset --- */
+* { box-sizing: border-box; }
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica", "Arial", sans-serif;
+    color: #1E1B2E;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    -weasy-font-feature-settings: "kern";
+}
+
+/* ====== COLORS ======
+   PURPLE_DARK  #1A0430 — gradient start
+   PURPLE_MID   #4A1070 — gradient mid
+   PURPLE_BASE  #7B2D8E — accents, borders, badges
+   LAVENDER     #E8D5F0 — soft tint
+   BODY_DARK    #1E1B2E — titles on white
+   BODY_MID     #3D2060 — subheads, accent text
+   BODY_MUTED   #6B6B8A — secondary text
+   ACCENT_ORANGE #F59B2B — sparingly for KPI, totals
+*/
+
+/* --- Cover page (full dark gradient) --- */
+.cover {
+    page: cover;
+    width: 210mm;
+    height: 297mm;
+    background: linear-gradient(140deg, #1A0430 0%, #4A1070 55%, #7B2D8E 100%);
+    color: #FFFFFF;
+    position: relative;
+    page-break-after: always;
+}
+.cover::before {
+    /* thin left stripe */
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 3mm; height: 100%;
+    background: #FFFFFF;
+    opacity: 0.9;
+}
+.cover::after {
+    /* faded background circle */
+    content: "";
+    position: absolute;
+    top: -60mm; right: -60mm;
+    width: 180mm; height: 180mm;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,213,240,0.18) 0%, rgba(232,213,240,0) 70%);
+}
+.cover .logo-block {
+    position: absolute;
+    top: 20mm;
+    left: 18mm;
+    display: flex;
+    align-items: center;
+    gap: 6mm;
+}
+.cover .logo-block img {
+    width: 18mm;
+    height: auto;
+}
+.cover .logo-block .brand {
+    font-size: 11pt;
+    letter-spacing: 4pt;
+    text-transform: uppercase;
+    color: #E8D5F0;
+    font-weight: 600;
+}
+.cover .date-badge {
+    position: absolute;
+    top: 22mm;
+    right: 20mm;
+    font-size: 9pt;
+    letter-spacing: 3pt;
+    text-transform: uppercase;
+    color: #E8D5F0;
+}
+.cover .title-block {
+    position: absolute;
+    top: 110mm;
+    left: 20mm;
+    right: 20mm;
+}
+.cover .eyebrow {
+    font-size: 10pt;
+    letter-spacing: 5pt;
+    text-transform: uppercase;
+    color: #E8D5F0;
+    margin-bottom: 8mm;
+    font-weight: 600;
+}
+.cover h1 {
+    font-size: 38pt;
+    line-height: 1.08;
+    font-weight: 700;
+    margin: 0 0 6mm 0;
+    letter-spacing: -0.5pt;
+    color: #FFFFFF;
+}
+.cover h1 .accent {
+    color: #E8D5F0;
+    font-weight: 300;
+    display: block;
+    font-size: 26pt;
+    margin-top: 2mm;
+    letter-spacing: 0;
+}
+.cover .tagline {
+    font-size: 12pt;
+    color: #F5E6FF;
+    font-style: italic;
+    max-width: 140mm;
+    line-height: 1.5;
+}
+.cover .client-card {
+    position: absolute;
+    bottom: 30mm;
+    left: 20mm;
+    right: 20mm;
+    padding: 8mm 10mm;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 3mm;
+    backdrop-filter: blur(4px);
+}
+.cover .client-card .label {
+    font-size: 8.5pt;
+    letter-spacing: 2.5pt;
+    text-transform: uppercase;
+    color: #E8D5F0;
+    margin-bottom: 3mm;
+}
+.cover .client-card .name {
+    font-size: 18pt;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin: 0;
+}
+.cover .client-card .company {
+    font-size: 11pt;
+    color: #E8D5F0;
+    margin-top: 1.5mm;
+}
+
+/* --- Content pages (white) --- */
+.content {
+    page: content;
+}
+.content-section {
+    page-break-inside: auto;
+}
+.content-section + .content-section {
+    margin-top: 10mm;
+}
+/* Intro collée à la première option */
+.section-proposition {
+    page-break-inside: auto;
+}
+.proposition-intro {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+    margin-bottom: 6mm;
+}
+
+/* Top bar on white pages — fixed position, repeats on every page */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 210mm;
+    height: 16mm;
+    background: linear-gradient(135deg, #4A1070 0%, #7B2D8E 100%);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    padding: 0 18mm;
+    z-index: 100;
+}
+.topbar .topbar-title {
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 3pt;
+    text-transform: uppercase;
+    flex: 1;
+}
+.topbar img {
+    height: 9mm;
+    width: auto;
+}
+/* Hide topbar on cover and close pages */
+.cover ~ .topbar,
+.topbar.hide {
+    display: none;
+}
+
+/* Section eyebrow + heading */
+.section-eyebrow {
+    display: inline-block;
+    font-size: 8pt;
+    letter-spacing: 3pt;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: #7B2D8E;
+    padding: 1.5mm 4mm;
+    border-radius: 1.5mm;
+    margin-bottom: 6mm;
+    font-weight: 600;
+    page-break-after: avoid;
+}
+h2.section-title {
+    font-size: 26pt;
+    color: #1E1B2E;
+    font-weight: 700;
+    margin: 0 0 3mm 0;
+    line-height: 1.1;
+    letter-spacing: -0.3pt;
+    page-break-after: avoid;
+}
+h2.section-title .purple {
+    color: #7B2D8E;
+}
+h3 {
+    page-break-after: avoid;
+}
+.section-lead {
+    font-size: 12pt;
+    color: #3D2060;
+    line-height: 1.55;
+    max-width: 160mm;
+    margin: 0 0 10mm 0;
+}
+.contexte-block h3 {
+    page-break-after: avoid;
+}
+
+/* Context section — left thick bar + body */
+.contexte-block {
+    position: relative;
+    padding: 6mm 0 6mm 10mm;
+    border-left: 3pt solid #7B2D8E;
+    margin-bottom: 8mm;
+}
+.contexte-block h3 {
+    font-size: 13pt;
+    color: #1E1B2E;
+    margin: 0 0 3mm 0;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+.contexte-block p {
+    margin: 0 0 3mm 0;
+    color: #444444;
+    font-size: 10.5pt;
+    line-height: 1.6;
+}
+.contexte-block p:last-child { margin-bottom: 0; }
+
+/* Quote callout */
+.callout {
+    background: #FAF6FC;
+    border-left: 3pt solid #7B2D8E;
+    padding: 6mm 8mm;
+    margin: 8mm 0;
+    font-style: italic;
+    color: #3D2060;
+    font-size: 11pt;
+    line-height: 1.55;
+    border-radius: 0 2mm 2mm 0;
+}
+.callout::before {
+    content: "“";
+    font-size: 40pt;
+    line-height: 0;
+    position: relative;
+    top: 10pt;
+    margin-right: 3mm;
+    color: #7B2D8E;
+    font-family: Georgia, serif;
+}
+
+/* Info grid on contexte page */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    margin: 8mm 0;
+}
+.info-card {
+    background: #FAFAFA;
+    border: 1px solid #E8D5F0;
+    border-left: 3pt solid #7B2D8E;
+    border-radius: 2mm;
+    padding: 5mm 6mm;
+}
+.info-card .label {
+    font-size: 8pt;
+    letter-spacing: 2pt;
+    text-transform: uppercase;
+    color: #7B2D8E;
+    font-weight: 700;
+    margin-bottom: 2mm;
+}
+.info-card .value {
+    font-size: 11pt;
+    color: #1E1B2E;
+    font-weight: 600;
+}
+
+/* Phase card — the core visual element */
+.phase {
+    margin-bottom: 10mm;
+    page-break-inside: auto;
+}
+/* Une ligne de prestation ne doit jamais se couper entre deux pages */
+table.systems tbody tr { page-break-inside: avoid; }
+table.systems thead { page-break-after: avoid; }
+.phase-header {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 2mm 2mm 0 0;
+    overflow: hidden;
+    table-layout: fixed;
+    page-break-inside: avoid;
+    page-break-after: avoid;
+}
+.phase-number,
+.phase-title-wrap,
+.phase-price {
+    display: table-cell;
+    vertical-align: middle;
+}
+.phase-number {
+    background: linear-gradient(135deg, #1A0430 0%, #4A1070 60%, #7B2D8E 100%);
+    color: #FFFFFF;
+    padding: 4mm 6mm;
+    font-size: 9pt;
+    letter-spacing: 3pt;
+    text-transform: uppercase;
+    font-weight: 600;
+    width: 34mm;
+    text-align: center;
+}
+.phase-title-wrap {
+    background: #3D2060;
+    color: #FFFFFF;
+    padding: 4mm 7mm;
+}
+.phase-title-wrap .title {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0;
+    line-height: 1.2;
+}
+.phase-title-wrap .sub {
+    font-size: 8.5pt;
+    color: #E8D5F0;
+    margin-top: 1.5mm;
+    letter-spacing: 0.3pt;
+    line-height: 1.3;
+}
+.phase-price {
+    background: #FFFFFF;
+    border: 1.5px solid #3D2060;
+    color: #1E1B2E;
+    padding: 4mm 5mm;
+    font-size: 13pt;
+    font-weight: 700;
+    width: 38mm;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.phase-body {
+    border: 1px solid #E8D5F0;
+    border-top: none;
+    border-radius: 0 0 2mm 2mm;
+    padding: 4mm 7mm 5mm 7mm;
+    background: #FFFFFF;
+}
+.phase-intro {
+    font-size: 10pt;
+    color: #3D2060;
+    font-style: italic;
+    margin: 0 0 4mm 0;
+    padding: 2mm 0 2mm 4mm;
+    border-left: 2pt solid #E8D5F0;
+    line-height: 1.45;
+}
+
+/* Systems table */
+table.systems {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10pt;
+    margin-top: 2mm;
+}
+table.systems thead th {
+    text-align: left;
+    font-size: 7.5pt;
+    letter-spacing: 2pt;
+    text-transform: uppercase;
+    color: #7B2D8E;
+    font-weight: 700;
+    padding: 2mm 3mm;
+    border-bottom: 1.5pt solid #7B2D8E;
+    background: transparent;
+}
+table.systems thead th.price { text-align: right; width: 28mm; }
+table.systems tbody td {
+    padding: 3mm;
+    border-bottom: 1px solid #EFE6F3;
+    vertical-align: top;
+    color: #1E1B2E;
+}
+table.systems tbody tr:last-child td { border-bottom: none; }
+table.systems tbody td.sys-name {
+    font-weight: 700;
+    color: #1E1B2E;
+    width: 52mm;
+}
+table.systems tbody td.sys-desc {
+    color: #444444;
+    font-size: 9.5pt;
+    line-height: 1.5;
+}
+table.systems tbody td.sys-price {
+    text-align: right;
+    font-weight: 700;
+    color: #3D2060;
+    font-size: 11pt;
+    white-space: nowrap;
+    width: 28mm;
+}
+table.systems tbody td.sys-price.offert {
+    color: #7B2D8E;
+}
+.offert-badge {
+    display: inline-block;
+    background: #7B2D8E;
+    color: #FFFFFF;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.5pt;
+    text-transform: uppercase;
+    padding: 1.5mm 3mm;
+    border-radius: 3mm;
+    white-space: nowrap;
+}
+table.systems tr.phase-total { page-break-inside: avoid; }
+table.systems tr.phase-total td {
+    padding: 4mm;
+    border-top: 2pt solid #3D2060;
+    border-bottom: none;
+    font-weight: 700;
+}
+table.systems tr.phase-total td.total-label {
+    text-align: right;
+    color: #1E1B2E;
+    font-size: 10pt;
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+}
+table.systems tr.phase-total td.total-value {
+    text-align: right;
+    color: #7B2D8E;
+    font-size: 14pt;
+    white-space: nowrap;
+}
+
+/* Recap box — sum of phases */
+.recap {
+    margin-top: 8mm;
+    background: linear-gradient(135deg, #1A0430 0%, #4A1070 60%, #7B2D8E 100%);
+    color: #FFFFFF;
+    border-radius: 3mm;
+    padding: 8mm 10mm;
+    page-break-inside: avoid;
+}
+.recap h3 {
+    font-size: 10pt;
+    letter-spacing: 4pt;
+    text-transform: uppercase;
+    color: #E8D5F0;
+    margin: 0 0 5mm 0;
+    font-weight: 600;
+}
+.recap table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #FFFFFF;
+}
+.recap td {
+    padding: 3mm 0;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    font-size: 10.5pt;
+}
+.recap td.amount { text-align: right; font-weight: 600; }
+.recap tr.total td {
+    border-bottom: none;
+    border-top: 1.5pt solid #FFFFFF;
+    padding-top: 5mm;
+    font-size: 14pt;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+.recap tr.total td.amount { color: #FFFFFF; }
+.recap tr.accent td {
+    color: #FBE3B8;
+    font-weight: 700;
+    border-bottom: none;
+}
+.recap tr.accent td.amount {
+    color: #F5B85A;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+}
+
+/* Extras — maintenance récurrente & coûts outils (blocs optionnels après le récap) */
+.extras {
+    margin-top: 8mm;
+    page-break-inside: avoid;
+}
+.extras-title {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #1E1B2E;
+    margin: 0 0 2mm 0;
+}
+.extras-lead {
+    color: #444444;
+    font-size: 10pt;
+    line-height: 1.5;
+    margin: 0 0 4mm 0;
+}
+.offered-badge {
+    background: #FFF6E8;
+    border: 1.5pt solid #F5B85A;
+    color: #7A4A00;
+    padding: 4mm 5mm;
+    border-radius: 2mm;
+    font-size: 11pt;
+    font-weight: 700;
+    line-height: 1.55;
+    text-align: center;
+    margin-bottom: 5mm;
+}
+.offered-badge::before {
+    content: "OFFERT";
+    display: inline-block;
+    background: #F59B2B;
+    color: #FFFFFF;
+    font-size: 8.5pt;
+    font-weight: 800;
+    letter-spacing: 1.5pt;
+    padding: 1mm 3mm;
+    border-radius: 10mm;
+    margin-right: 3mm;
+    vertical-align: middle;
+}
+.tiers {
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 4mm 0;
+}
+.tier-card {
+    display: table-cell;
+    width: 50%;
+    border: 1.5pt solid #E4D3EE;
+    border-radius: 3mm;
+    padding: 5mm;
+    vertical-align: top;
+}
+.tier-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid #EFE6F3;
+    padding-bottom: 2mm;
+    margin-bottom: 3mm;
+}
+.tier-name { font-weight: 800; font-size: 12pt; color: #3D2060; }
+.tier-price { font-weight: 800; font-size: 13pt; color: #7B2D8E; white-space: nowrap; }
+.tier-sub { font-size: 9pt; color: #7B2D8E; font-style: italic; margin-bottom: 2mm; }
+.tier-features { margin: 0; padding-left: 4mm; }
+.tier-features li {
+    font-size: 9.5pt;
+    color: #1E1B2E;
+    line-height: 1.5;
+    margin-bottom: 1.5mm;
+}
+.couts-from {
+    font-size: 13pt;
+    font-weight: 800;
+    color: #7B2D8E;
+    margin-bottom: 3mm;
+}
+.couts-table { width: 100%; border-collapse: collapse; }
+.couts-table td {
+    padding: 2.5mm 0;
+    border-bottom: 1px solid #EFE6F3;
+    font-size: 10pt;
+    color: #1E1B2E;
+}
+.couts-table td.couts-price {
+    text-align: right;
+    font-weight: 700;
+    color: #3D2060;
+    white-space: nowrap;
+}
+.couts-note {
+    font-size: 9pt;
+    color: #666666;
+    font-style: italic;
+    line-height: 1.5;
+    margin-top: 3mm;
+}
+
+/* Close page */
+.close {
+    page: close;
+    width: 210mm;
+    height: 297mm;
+    background: linear-gradient(155deg, #0F0220 0%, #3D1060 55%, #5A1880 100%);
+    color: #FFFFFF;
+    position: relative;
+    page-break-before: always;
+}
+.close::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    width: 3mm; height: 100%;
+    background: #7B2D8E;
+}
+.close .logo-block {
+    position: absolute;
+    top: 30mm;
+    left: 20mm;
+}
+.close .logo-block img { width: 24mm; }
+.close .logo-block .brand {
+    font-size: 11pt;
+    letter-spacing: 5pt;
+    text-transform: uppercase;
+    color: #E8D5F0;
+    margin-top: 5mm;
+    font-weight: 600;
+}
+.close .message {
+    position: absolute;
+    top: 110mm;
+    left: 20mm;
+    right: 20mm;
+}
+.close .message h2 {
+    font-size: 32pt;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 8mm 0;
+    color: #FFFFFF;
+}
+.close .message .sub {
+    font-size: 13pt;
+    color: #E8D5F0;
+    font-style: italic;
+    max-width: 140mm;
+    line-height: 1.5;
+}
+.close .contact-card {
+    position: absolute;
+    bottom: 30mm;
+    left: 20mm;
+    right: 20mm;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 3mm;
+    padding: 8mm 10mm;
+}
+.close .contact-card .label {
+    font-size: 8.5pt;
+    letter-spacing: 2.5pt;
+    text-transform: uppercase;
+    color: #E8D5F0;
+    margin-bottom: 4mm;
+    font-weight: 600;
+}
+.close .contact-card .contact-row {
+    display: flex;
+    gap: 12mm;
+    flex-wrap: wrap;
+}
+.close .contact-card .contact-item .k {
+    font-size: 8pt;
+    color: #E8D5F0;
+    text-transform: uppercase;
+    letter-spacing: 1.5pt;
+    margin-bottom: 1mm;
+}
+.close .contact-card .contact-item .v {
+    font-size: 11pt;
+    color: #FFFFFF;
+    font-weight: 500;
+}
