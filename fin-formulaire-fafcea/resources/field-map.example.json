@@ -1,0 +1,16 @@
+{
+  "_comment": "Field-map exemple FAFCEA. Clés gauche = noms champs RÉELS du PDF (via --inspect). Valeurs = chemins dans data.json. À adapter après inspection.",
+  "nom_prenom": "artisan.nomComplet",
+  "raison_sociale": "entreprise.raisonSociale",
+  "siret": "entreprise.siret",
+  "code_nafa": "entreprise.codeNafa",
+  "adresse": "entreprise.adresse",
+  "email": "artisan.email",
+  "telephone": "artisan.telephone",
+  "intitule_formation": "formation.intitule",
+  "type_formation": "formation.type",
+  "dates_formation": "formation.dates",
+  "duree_heures": "formation.dureeHeures",
+  "cout_horaire": "formation.coutHoraire",
+  "organisme_formation": "organisme.nom"
+}

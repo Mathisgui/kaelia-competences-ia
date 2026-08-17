@@ -1,6 +1,6 @@
 # Compétences IA Kaelia — fichiers techniques
 
-Scripts, gabarits et ressources graphiques utilisés par les compétences IA de
+Scripts, gabarits et ressources graphiques des compétences IA de
 [Kaelia](https://kaelia-formacoach.com), organisme de formation (NDA 84420407442).
 
 **Les règles vivent dans Notion.** Ce dépôt ne contient que ce qu'une IA ne peut pas
@@ -9,58 +9,79 @@ recopier utilement : du code, des polices, des images et des formulaires PDF.
 ## Pourquoi ce dépôt existe
 
 Ces fichiers étaient recopiés dans Notion et dans Google Drive. Une IA devait donc les
-**lire puis les réécrire** à chaque usage — long, coûteux en jetons, et impossible pour
-une police ou un PNG. Ici, elle les obtient d'un seul geste :
+**lire puis les réécrire** à chaque usage — lent, coûteux en jetons, et impossible pour
+une police ou un PNG. Ici, elle les obtient d'un seul geste, sans authentification :
 
 ```bash
 git clone https://github.com/Mathisgui/kaelia-competences-ia.git
 ```
 
-Aucune authentification n'est requise.
+Un seul fichier, sans cloner :
+
+```bash
+curl -sO https://raw.githubusercontent.com/Mathisgui/kaelia-competences-ia/main/fin-convention/scripts/generate.js
+```
+
+## Principe de rangement
+
+Chaque dossier est **autonome et exécutable tel quel**. Les générateurs résolvent leurs
+ressources par `__dirname` (`assets/`, `./kaelia_doc.js`) : c'est pourquoi `kaelia_doc.js`
+et les logos sont volontairement présents en plusieurs exemplaires plutôt que factorisés.
+Déplacer un de ces fichiers casse le script.
+
+> ⚠️ `kaelia_doc.js` est **identique** dans les 7 générateurs `fin-*`. Toute correction
+> doit être reportée dans les 7, sinon ils divergent.
 
 ## Contenu
 
-### `kaelia-programme-formation/`
-Génération d'un programme de formation au format `.docx`.
+### Génération de documents Word (`docx`)
 
-| Chemin | Rôle |
+| Dossier | Produit |
 |---|---|
-| `scripts/generate_programme.js` | Le générateur. Prend un objet `DOC_DATA`, produit le `.docx`. |
-| `scripts/make_pill.py` | Fabrique le pavé « PROGRAMME DE FORMATION » à coins arrondis (PNG). |
-| `exemples/prog-reference.js` | Jeu de données de **référence** : le niveau de qualité rédactionnelle attendu. À lire avant d'écrire un programme. |
-| `assets/` | Bandeau de couverture, logos, pavé pré-généré, police Montserrat. |
+| `fin-convention/` | Convention de formation |
+| `fin-devis/` | Détail du coût pédagogique |
+| `fin-emargement/` | Feuille d'émargement |
+| `fin-attestation-presence/` | Attestation de présence et de règlement |
+| `fin-attestation-assiduite/` | Attestation d'assiduité |
+| `fin-autodiagnostic-fafcea/` | Autodiagnostic FAFCEA |
+| `fin-saisie-en-ligne-akto/` | Préparation de la saisie AKTO |
+| `kaelia-word/` | Document Word générique (charte Kaelia) |
+| `kaelia-programme-formation/` | Programme de formation |
 
 ```bash
-cd kaelia-programme-formation/scripts
-npm install          # dépendance : docx
-node generate_programme.js
+cd fin-convention/scripts
+npm install docx          # dépendance unique
+node generate.js data.js  # data.js n'est jamais versionné
 ```
 
-`make_pill.py` demande Pillow (`pip install pillow`). La police Montserrat étant
-**variable**, la graisse se sélectionne par `set_variation_by_name("Bold")` — sans quoi
-le rendu sort en Thin.
+`kaelia-programme-formation` a son propre `package.json` (`npm install` puis
+`node generate_programme.js`), ses assets et `exemples/prog-reference.js` — le jeu de
+données de **référence**, à lire avant d'écrire un programme : il fixe le niveau attendu.
+`make_pill.py` (pavé arrondi) demande Pillow. La police Montserrat étant **variable**,
+la graisse se sélectionne par `set_variation_by_name("Bold")`, sans quoi le rendu sort en Thin.
 
-### `kaelia-financement/`
-Remplissage des formulaires de demande de prise en charge.
+### Formulaires de financement (PDF AcroForm)
 
-| Chemin | Rôle |
+| Dossier | Contenu |
 |---|---|
-| `scripts/fill_pdf.py` | Remplit un formulaire AcroForm à partir d'un `data.json`. |
-| `references/field-map.json` | Correspondance champs PDF → chemins dans les données. |
-| `references/data.example.json` | Exemple de données. **Fictif**, à l'exception de l'identité de l'organisme. |
-| `templates/` | Gabarits vierges (AGEFICE 2025). |
+| `kaelia-financement/` | `fill_pdf.py`, field-map AGEFICE, **gabarit AGEFICE 2025** |
+| `fin-formulaire-agefice/` | Même outillage, côté compétence Claude |
+| `fin-formulaire-fafcea/` | field-map FAFCEA |
 
 ```bash
 pip install pypdf
-python3 scripts/fill_pdf.py data.json          # data.json n'est jamais versionné
+python3 scripts/fill_pdf.py data.json    # data.json n'est jamais versionné
 ```
+
+Le gabarit vierge est dans `kaelia-financement/templates/`.
 
 ## Ce qui n'est délibérément pas ici
 
 - **Les règles et procédures métier** — elles vivent dans Notion, qui en est la source.
-- **Les secrets** — jetons, clés d'API, chemins de webhooks.
+  Ce dépôt ne contient aucun `SKILL.md`.
+- **Les secrets** — jetons, clés d'API, chemins de webhooks, adresses d'infrastructure.
 - **Toute donnée client.** Les jeux d'exemple sont fictifs. Un `data.json` réel contient
-  des noms, dates de naissance et SIRET : il est exclu par `.gitignore`, et doit le rester.
+  noms, dates de naissance et SIRET : il est exclu par `.gitignore` et doit le rester.
 
 ## Licence
 

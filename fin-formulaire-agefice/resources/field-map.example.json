@@ -1,0 +1,18 @@
+{
+  "_comment": "Exemple de field-map. Les clés à GAUCHE sont les noms de champs RÉELS du PDF AGEFICE (obtenus via --inspect). Les valeurs à DROITE sont des chemins pointés dans data.json. À ADAPTER après inspection du vrai PDF.",
+  "nom_prenom_dirigeant": "dirigeant.nomComplet",
+  "raison_sociale": "entreprise.raisonSociale",
+  "siret": "entreprise.siret",
+  "forme_juridique": "entreprise.formeJuridique",
+  "adresse": "entreprise.adresse",
+  "email": "dirigeant.email",
+  "telephone": "dirigeant.telephone",
+  "intitule_formation": "formation.intitule",
+  "dates_formation": "formation.dates",
+  "duree_heures": "formation.dureeHeures",
+  "cout_formation": "formation.coutHT",
+  "organisme_formation": "organisme.nom",
+  "iban": "rib.iban",
+  "bic": "rib.bic",
+  "mandat_organisme": "mandat.kaelia"
+}
